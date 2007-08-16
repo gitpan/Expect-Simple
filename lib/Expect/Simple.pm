@@ -1,15 +1,13 @@
 package Expect::Simple;
 
 use strict;
-use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
+use warnings;
 
 use Carp;
-
 use Expect;
 
-$VERSION = '0.02';
+our $VERSION = '0.03';
 
-# Preloaded methods go here.
 
 sub new {
   my $proto = shift;
@@ -21,6 +19,7 @@ sub new {
 	      Prompt => undef,
 	      DisconnectCmd => undef,
 	      Cmd => undef,
+	      RawPty => 0,
 	     };
 
   bless ($obj, $class);
@@ -32,7 +31,7 @@ sub new {
   {
     croak( __PACKAGE__, ": attribute error : `$attr' is not recognized \n" )
       unless exists $obj->{$attr};
-    
+
     $obj->{$attr} = $val;
   }
 
@@ -68,14 +67,19 @@ sub _connect
   print STDERR "Running command..."
     if $obj->{Verbose};
 
-  $obj->{_conn} = 
-    Expect->spawn( $obj->{Cmd} ) 
-      or croak( __PACKAGE__, ": error spawning command\n" );
+  $obj->{_conn} = Expect->new();
+
+  $obj->{_conn}->raw_pty(1) if $obj->{RawPty};
+
+  $obj->{_conn}->spawn( 'ARRAY' eq ref($obj->{Cmd})
+			? @{$obj->{Cmd}}
+			:   $obj->{Cmd} )
+    or croak( __PACKAGE__, ": error spawning command\n" );
 
   print STDERR "done.\n"
     if $obj->{Verbose};
 
-  $obj->{_conn}->debug( $obj->{Debug} ); 
+  $obj->{_conn}->debug( $obj->{Debug} );
 
   $obj->{_conn}->log_stdout( $obj->{Verbose} > 3 ? 1 : 0 );
 
@@ -192,7 +196,7 @@ Expect::Simple - wrapper around the Expect module
   use Expect::Simple;
 
   my $obj = new Expect::Simple 
-        { Cmd => "dmcoords verbose=1 infile=$infile",
+        { Cmd => [ dmcoords => 'verbose=1', "infile=$infile"],
 	  Prompt => [ -re => 'dmcoords>:\s+' ],
 	  DisconnectCmd => 'q',
 	  Verbose => 0,
@@ -247,7 +251,7 @@ destroyed.
 
 =item new
 
-    $obj = new Expect::Simple \%attr;
+    $obj = Expect::Simple->new( \%attr );
 
 This creates a new object, starting up the program with which to
 communicate (using the B<Expect> B<spawn> method) and waiting for a
@@ -259,7 +263,11 @@ attributes are:
 
 =item Cmd
 
-The command to which to connect.  This must be specified.
+  Cmd => $command,
+  Cmd => [ $command, $arg1, $arg2, ... ],
+
+The command to which to connect.  The passed command may either be a
+scalar or an array.
 
 =item Prompt
 
@@ -267,7 +275,7 @@ This specifies one or more prompts to scan for.  For a single prompt,
 the value may be a scalar; for more, or for matching of regular
 expressions, it should be an array reference.  For example,
 
-  Prompt => 'prompt1> '
+  Prompt => 'prompt1> ',
   Prompt => [ 'prompt1> ', 'prompt2> ', -re => 'prompt\d+>\s+' ]
 
 All prompts are taken literally, unless immediately preceded by a C<-re> flag,
@@ -277,6 +285,11 @@ in which case they are regular expressions.
 
 This is the command to be sent to the target program which will cause
 it to exit.
+
+=item RawPty
+
+If set, then underlying B<Expect> object's pty mode is set to raw mode
+(see  B<Expect::raw_pty()>).
 
 =item Timeout
 
@@ -355,7 +368,7 @@ will run!  There's no known workaround for this.
 =head1 LICENSE
 
 This software is released under the GNU General Public License.  You
-may find a copy at 
+may find a copy at
 
    http://www.fsf.org/copyleft/gpl.html
 

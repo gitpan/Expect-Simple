@@ -1,6 +1,4 @@
-			 ====================
-			 Expect::Simple v0.02
-			 ====================
+			 Expect::Simple
 
 NAME
 
@@ -29,19 +27,9 @@ INSTALLATION
 	make install
 
 
-CHANGES
-
-    See the Changes file for more details
-
-    0.02
-    ----
-
-    First public release
-
-
 COPYRIGHT
 
-    (C) 2000-2002 Smithsonian Astrophysical Observatory.  
+    (C) 2000-2007 Smithsonian Astrophysical Observatory.  
     All rights reserved.
 
     This program is free software; you can redistribute it and/or

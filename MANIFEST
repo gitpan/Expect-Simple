@@ -1,6 +1,10 @@
-MANIFEST
-Makefile.PL
-Simple.pm
-test.pl
-README
+ChangeLog
+Changes
+lib/Expect/Simple.pm
 LICENSE
+Makefile.PL
+MANIFEST
+README
+t/Expect-Simple.t
+t/testprog
+META.yml                                 Module meta-data (added by MakeMaker)

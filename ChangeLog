@@ -1,0 +1,57 @@
+2007-08-16  Diab Jerius  <djerius@cfa.harvard.edu>
+
+	Tag: 0.03
+	* no changes, just release as 0.03
+
+2007-08-07 18:05 -0400  djerius  <djerius@cfa.harvard.edu>  (406422c879e7)
+
+	Tag: 0.03_02
+	* Makefile.PL:
+	added LICENSE to Makefile.PL
+
+2007-07-31  Diab Jerius  <djerius@cfa.harvard.edu>
+
+	Tag: 0.03_01
+	
+
+2007-07-31 18:04 -0400  djerius  <djerius@cfa.harvard.edu>  (d5b8c528e728 [tip])
+	* lib/Expect/Simple.pm:
+	minor code cleanup
+
+2007-07-31 18:00 -0400  djerius  <djerius@cfa.harvard.edu>  (b3256c687aee)
+
+	* Changes, GNUmakefile, INSTALL, MANIFEST, Makefile.PL, README,
+	Simple.pm, lib/Expect/Simple.pm, t/Expect-Simple.t, t/testprog:
+	Modernized layout, new tests, Cmd takes arrays, new RawPty attribute
+
+	- Modernized layout
+	- Cmd attribute can now take arrays
+	  [Adriano Ferreira <a.r.ferreira@gmail.com>]
+	- Added RawPty attribute
+	- tests!
+
+2007-07-31 13:53 -0400  djerius  <djerius@cfa.harvard.edu>  (72ff04de2b51 [tip])
+	Tag: 0.02
+	* belated commit  of minor changes for initial release to CPAN
+
+	* Simple.pm:
+	use __PACKAGE__ instad of constant CLASS
+
+2002-04-12 17:04  tag V0_01
+
+2002-04-12 17:04  dj
+
+	* LICENSE, README, Simple.pm: added license info
+
+2000-08-31 14:23  tag initial
+
+2000-08-31 14:23  dj
+
+	* Makefile.PL, Simple.pm, GNUmakefile, INSTALL, MANIFEST: Initial
+	  revision
+
+2000-08-31 14:23  dj
+
+	* Makefile.PL, Simple.pm, GNUmakefile, INSTALL, MANIFEST: [no log
+	  message]
+
